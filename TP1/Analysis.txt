@@ -1,0 +1,22 @@
+lyonnaisCount = 424
+lyonnaisAndUnder30Count = 148
+existToulousainAndNameStartsWithA = 1
+minAge = 20 and minAgeName = Bruno
+maxAge = 113 and maxAgeName = Jabba
+meanAge = 34.4452
+standardDeviationAge = 8.78702
+parisBetterThanMarseille = 0
+covarianceAgeAndTime = 10.8301
+
+cityList: 
+Montcuq
+Tatouine
+Clermont-Ferrand
+Toulouse
+Brest
+Kingston
+Marseille
+Lyon
+Bordeaux
+Lille
+Paris
