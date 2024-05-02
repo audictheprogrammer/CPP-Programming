@@ -1,0 +1,4 @@
+DenseMatrix Naive Power: 4.31441 (s).
+DenseMatrix Opt Power: 2.03441 (s).
+SparseMatrix Naive Power: 0.231029 (s).
+SparseMatrix Opt Power: 0.240908 (s).
