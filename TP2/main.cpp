@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Matrix.cpp"
+#include "Matrix.hpp"
 #include <cassert>
 #include <string>
 

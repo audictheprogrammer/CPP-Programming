@@ -1,17 +1,4 @@
-#include <iostream>
-#include <Eigen/Dense>
-#include <Eigen/Sparse>
-#include <fstream>
-#include <chrono>
-
-typedef Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic>
-        MatrixDouble;
-
-typedef Eigen::Matrix<double, Eigen::Dynamic, 1>
-        VectorDouble;
-
-typedef Eigen::SparseMatrix<double>
-        SparseMatrixDouble;
+#include "Matrix.hpp"
 
 
 MatrixDouble power(const MatrixDouble &M, int n) {
@@ -24,7 +11,7 @@ MatrixDouble power(const MatrixDouble &M, int n) {
     if (n == 1) {
         return M;
     }
-
+    
     MatrixDouble N(M.rows(), M.cols());
     N = power(M, n-1);
     return M*N;
