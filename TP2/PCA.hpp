@@ -1,5 +1,6 @@
 #include "Matrix.hpp"
 #include <Eigen/Eigenvalues>
+#include <random>
 
 #ifndef PCA_HPP
 #define PCA_HPP
@@ -34,4 +35,13 @@ public:
     int dimension(double alpha);
 
 };
+
+class GaussianScatter {
+public:
+    GaussianScatter(int n, const std::vector<double>& param, std::mt19937& gen);
+    MatrixDouble getData() {return this->data;};
+private:
+    MatrixDouble data;
+};
+
 #endif

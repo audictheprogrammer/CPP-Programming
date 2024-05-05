@@ -75,3 +75,36 @@ int PCA::dimension(double alpha) {
 
     return -1;
 }
+
+
+GaussianScatter::GaussianScatter(int n, const std::vector<double>& param, std::mt19937& gen) {
+    /* Constructs a Gaussian scatter in 2D.
+    Generates two independant Gaussian random variables.
+    param: mu1, mu2, sig1, sig2, rho, theta.
+    N_i ~N(mu_i, sig_i).
+    rho: coorrelation coefficiant between -1 and 1.
+    theta: rotation angle.
+    */
+    // std::mt19937 gen(time(nullptr));
+
+    double mu1 = param[0];
+    double mu2 = param[1];
+    double sig1 = param[2];
+    double sig2 = param[3];
+    double rho = param[4];
+    double theta = param[5];
+
+    std::normal_distribution<double> N1(0., 1.);
+    std::normal_distribution<double> N2(0., 1.);
+
+    this->data.resize(2, n);
+    for (size_t i = 0; i < n; i++) {
+        double n1 = mu1 + sig1 * N1(gen);
+        double n2 = mu2 + sig2 * N2(gen);
+        this->data(0, i) = cos(theta) * n1 - sin(theta) * n2;
+        this->data(1, i) = sin(theta) * n1 + cos(theta) * (rho*n1 + (1-rho)*n2);
+    }
+
+    // std::cout << this->data << std::endl;
+
+}
