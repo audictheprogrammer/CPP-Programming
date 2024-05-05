@@ -54,9 +54,13 @@ int main() {
 
     VectorDouble IrisEigenvalues = pca.getValues();
     MatrixDouble IrisEigenvectors = pca.getVectors();
-
+    
     std::cout << "Eigenvalues: " << std::endl;
-    std::cout << IrisEigenvalues << std::endl;
+    std::cout << IrisEigenvalues << std::endl << std::endl;
+
+    int d = pca.dimension(0.98);
+    std::cout << "Alpha = 0.98 => Dimension = " << d << std::endl;
+
 
     return 0;
 }

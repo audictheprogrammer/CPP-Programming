@@ -31,6 +31,7 @@ public:
     /* Methods. */
     MatrixDouble centerData();
     void compute(const MatrixDouble& M);
+    int dimension(double alpha);
 
 };
 #endif
