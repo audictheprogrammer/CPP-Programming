@@ -3,8 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
-#include <random>
-#include <vector>
+#include <ctime>
 
 int main() {
     // Part 1.
@@ -35,13 +34,20 @@ int main() {
     std::list<Cycle> L = u.cycles();
     std::cout << "Permutation order of (s*t)^-1 is: " << u.order(L) << std::endl;
     u.printCycles(L);
-    std::cout << "This permutation has " << L.size() <<
-    " cycles, where the longest is of size: " <<
+    std::cout << "This permutation has: " << L.size() <<
+    " cycles, with the longest being of size: " <<
     (*std::max_element(L.begin(), L.end())).order() << std::endl;
     // Here it's using the '<' operator.
-
-
     // Part 3.
-    
+    std::mt19937 g(time(nullptr));
+    unsigned n = 100;
+    unsigned nb_echant = 10000;
+    unsigned nb_derang = 0;
+    for (unsigned i = 0; i < nb_echant; i++) {
+        nb_derang += Permutation(n, g).is_derangement();
+    }
+    std::cout << "The ratio of derangements is approximately: "
+        << nb_derang/double(nb_echant) << std::endl;
+
     return 0;
 }

@@ -28,6 +28,27 @@ Permutation::Permutation(std::istream& input) {
     std::cout << "Permutation of size " << n << " loaded." << std::endl;
 }
 
+Permutation::Permutation(size_t n, std::mt19937& g) {
+    /* Construct a random permutation. 
+    Time Complexity: O(n). 
+    */
+    this->n = n;
+    this->val.resize(n);
+    for (size_t i = 0; i < n; i++) {
+        this->val[i] = i;
+    }
+
+    /* Version 1: Using std::swap. */
+    // for (size_t i = 0; i < n-1; i++) {
+    //     std::uniform_int_distribution<int> distribution(i, n-1);
+    //     int j = distribution(g);
+    //     std::swap(val[i], val[j]);
+    // }
+
+    /* Version 2: Using std::shuffle. */
+    std::shuffle(val.begin(), val.end(), g);
+}
+
 
 /* Methods. */
 Permutation Permutation::extend(int m) const{
@@ -119,7 +140,7 @@ int Permutation::order(const std::list<Cycle>& L) const {
 
 void Permutation::printCycles(const std::list<Cycle>& L) const {
     /* Prints the cycles. */
-    std::cout << "Permutation in cycles format: " << std::endl;
+    std::cout << "Permutation in cycle format: " << std::endl;
     for (Cycle c: L) {
         std::cout << c;
     }

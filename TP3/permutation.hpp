@@ -3,6 +3,7 @@
 #include <list>
 #include <set>
 #include <numeric>
+#include <random>
 #include "cycle.hpp"
 
 #ifndef PERMUTATION_HPP
@@ -22,6 +23,7 @@ public:
     Permutation(const std::vector<int>& u);
     Permutation(const size_t n);
     Permutation(std::istream& input);
+    Permutation(size_t n, std::mt19937& g);
 
     /* Methods. */
     Permutation operator *(const Permutation& s);
@@ -30,6 +32,8 @@ public:
     std::list<Cycle> cycles() const;
     int order(const std::list<Cycle>& L) const;
     void printCycles(const std::list<Cycle>& L) const;
+    // Permutation without fixed points is a derangement.
+    bool is_derangement() {return fixedPoints().empty();};
 
     /* Accessors and Mutators. */
     std::vector<int> getVal() const {return val;};
