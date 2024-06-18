@@ -1,4 +1,5 @@
 #include "permutation.hpp"
+#include "cycle.hpp"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -31,8 +32,13 @@ int main() {
     Permutation u = a.inverse();
     std::cout << "a^{-1}:" << std::endl;
     std::cout << u << std::endl;
-
-    // std::cout << "Permutation order of (s*t)^-1 is: " << u.order() << std::endl;
+    std::list<Cycle> L = u.cycles();
+    std::cout << "Permutation order of (s*t)^-1 is: " << u.order(L) << std::endl;
+    u.printCycles(L);
+    std::cout << "This permutation has " << L.size() <<
+    " cycles, where the longest is of size: " <<
+    (*std::max_element(L.begin(), L.end())).order() << std::endl;
+    // Here it's using the '<' operator.
 
 
     // Part 3.

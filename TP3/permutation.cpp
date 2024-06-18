@@ -1,6 +1,7 @@
 #include "permutation.hpp"
 #include <assert.h>
 
+
 /* Constructors. */
 Permutation::Permutation(const std::vector<int>& u): val(u), n(u.size()) {}
 
@@ -27,13 +28,35 @@ Permutation::Permutation(std::istream& input) {
     std::cout << "Permutation of size " << n << " loaded." << std::endl;
 }
 
-Permutation Permutation::operator*(const Permutation& s) {
-    /* Composition of permutation. */
-    assert(this->n == s.n);
-    std::vector<int> res(n);
-    for (size_t i = 0; i < n; i++) {
-        res[i] = this->val[s.val[i]];
+
+/* Methods. */
+Permutation Permutation::extend(int m) const{
+    /* Extension of the current permutation by 
+    adding new fixed points. */
+    if (m <= n) return *this;
+
+    std::vector<int> res = val;
+    res.resize(m);
+    for (size_t i = n; i < m; i++) {
+        res[i] = i;
     }
+
+    return Permutation(res);
+}
+
+Permutation Permutation::operator*(const Permutation& s) {
+    /* Composition of permutation. 
+    Performs extension of permutation if needed. 
+    Time Complexity: O(N).
+    */
+    int N = std::max(this->n, s.n);
+    Permutation A = this->extend(N);
+    Permutation B = s.extend(N);
+    std::vector<int> res(N);
+    for (size_t i = 0; i < N; i++) {
+        res[i] = A(B(i));
+    }
+
     return Permutation(res);
 }
 
@@ -48,51 +71,83 @@ std::list<int> Permutation::fixedPoints() {
 }
 
 Permutation Permutation::inverse() const {
-    /* Computes the inverse of the current permutation.
-    Uses the following property: Any permutation in Sn can be
+    /* Computes the inverse of the current permutation. 
+    Time Complexity: O(n).
+    */
+    Permutation res(n);
+    for (size_t i = 0; i < n; i++) {
+        res(val[i]) = i;
+    }
+
+    return res;
+}
+
+std::list<Cycle> Permutation::cycles() const{
+    /* Uses the following property: Any permutation in Sn can be
     written as a product of disjoint cycles.
     Time Complexity: O(n).
     */
-
-    // Part 1: Use the property.
-    std::vector<int> visited(n);
-    std::list<std::list<int>> cycles;
-
-    for (int i = 0; i < n; i++) {
-        if (visited[i]) continue;
-
-        std::list<int> current_cycle;
-        int current_elem = i;
-
-        do {
-            visited[current_elem] = 1;
-            current_cycle.push_back(current_elem);
-            current_elem = val[current_elem];
-        } while (current_elem != i);
-
-        cycles.push_back(current_cycle);
+    std::list<Cycle> L; // Cycles.
+    std::set<int> S;
+    for (int i = 0 ; i < n; i++) {
+        S.insert(i);
     }
 
-    // Part 2: Inverse the cycles.
-    std::vector<int> res(n);
-    for (const auto& cycle: cycles) {
-        for (auto it = cycle.rbegin(); it != cycle.rend(); it++) {
-            int i = *it;
-            int j = (it == std::prev(cycle.rend())) ? *cycle.rbegin() : *std::next(it);
-            res[i] = j;
-            std::cout << "i, j = (" << i << ", " << j << ")\n";
-        }
-    }    
+    while (S.size() != 0) {        
+        int i = *S.begin();
+        std::list<int> elem; // Cycle.
+        int j = i; 
+        do {
+            S.erase(j);
+            elem.push_back(j);
+            j = val[j];
+        } while (j != i);
+        L.push_back(elem);
+    }
 
-    return Permutation(res);
+    return L;
+}
+
+int Permutation::order(const std::list<Cycle>& L) const {
+    /* Computes the order of a permutation. 
+    Converts the list of cycles to a list of order.
+    */
+    std::list<int> O;
+    std::for_each(L.begin(), L.end(), [&O] (Cycle c) {O.push_back(c.order());});
+    return lcm_list(O);
+}
+
+void Permutation::printCycles(const std::list<Cycle>& L) const {
+    /* Prints the cycles. */
+    std::cout << "Permutation in cycles format: " << std::endl;
+    for (Cycle c: L) {
+        std::cout << c;
+    }
+    std::cout << std::endl;
 }
 
 
+// Static methods.
+int Permutation::gcd(int a, int b) {
+    /* Computes the gcd of two numbers. */
+    if (b == 0) return a;
+    int r = a % b;
+    return gcd(b, r);
+}
+
+int Permutation::lcm(int a, int b) {
+    /* Computes the lcm of two numbers. */
+    return a*b / gcd(a, b);
+}
+
+int Permutation::lcm_list(const std::list<int>& L) {
+    /* Computes the lcm of a list of numbers. */
+    return std::accumulate(L.begin(), L.end(), 1, lcm);
+}
 
 std::ostream& operator <<(std::ostream& o, const Permutation& s) {
     /* Output stream operator. */
-    const std::vector<int> val = s.getVal();
-    for (auto it = val.begin(); it != val.end(); it++) {
+    for (auto it = s.val.begin(); it != s.val.end(); it++) {
         o << *it << "\t";
     }
     o << "\n";
