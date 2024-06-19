@@ -14,7 +14,7 @@ class Permutation {
 private:
     std::vector<int> val;
     size_t n;
-    Permutation extend (int m) const;
+    Permutation extend (size_t m) const;
     static int gcd(int a, int b);
     static int lcm(int a, int b);
     static int lcm_list(const std::list<int>& L);

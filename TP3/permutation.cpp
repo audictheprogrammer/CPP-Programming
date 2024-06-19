@@ -18,7 +18,7 @@ Permutation::Permutation(std::istream& input) {
     input >> n;
     Permutation res(n);
 
-    int v;
+    size_t v;
     for (size_t i = 0; i < n; i++) {
         input >> v;
         assert(v >= 0 && v < n);
@@ -49,7 +49,7 @@ Permutation::Permutation(size_t n, std::mt19937& g) {
 
 
 /* Methods. */
-Permutation Permutation::extend(int m) const{
+Permutation Permutation::extend(size_t m) const{
     /* Extension of the current permutation by 
     adding new fixed points. */
     if (m <= n) return *this;
@@ -68,7 +68,7 @@ Permutation Permutation::operator*(const Permutation& s) {
     Performs extension of permutation if needed. 
     Time Complexity: O(N).
     */
-    int N = std::max(this->n, s.n);
+    size_t N = std::max(this->n, s.n);
     Permutation A = this->extend(N);
     Permutation B = s.extend(N);
     std::vector<int> res(N);
@@ -83,7 +83,7 @@ std::list<int> Permutation::fixedPoints() {
     /* Returns the fixed points of a permutation. */
     std::list<int> res;
     for (size_t i = 0; i < n; i++){
-        if (val[i] == i) res.push_back(i);
+        if (val[i] == (int) i) res.push_back(i);
     }
 
     return res;
@@ -108,7 +108,7 @@ std::list<Cycle> Permutation::cycles() const{
     */
     std::list<Cycle> L; // Cycles.
     std::set<int> S;
-    for (int i = 0 ; i < n; i++) {
+    for (size_t i = 0 ; i < n; i++) {
         S.insert(i);
     }
 

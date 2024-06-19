@@ -1,7 +1,7 @@
 lyonnaisCount = 424
 lyonnaisAndUnder30Count = 148
 existToulousainAndNameStartsWithA = 1
-minAge = 20 and minAgeName = Alix
+minAge = 20 and minAgeName = Emma
 maxAge = 113 and maxAgeName = Jabba
 meanAge = 34.4452
 standardDeviationAge = 8.78702
@@ -10,13 +10,13 @@ covarianceAgeAndTime = 10.8301
 
 cityList: 
 Montcuq
+Brest
 Tatouine
 Clermont-Ferrand
-Lyon
-Toulouse
-Brest
+Bordeaux
 Lille
+Toulouse
 Kingston
 Marseille
+Lyon
 Paris
-Bordeaux

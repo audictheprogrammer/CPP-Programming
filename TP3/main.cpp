@@ -2,9 +2,11 @@
 #include <fstream>
 #include <algorithm>
 #include <ctime>
+#include <chrono>
 #include "permutation.hpp"
 #include "cycle.hpp"
 #include "../TP1/Ex3.cpp"
+#include "perm_matrix.hpp"
 
 int main() {
     // Part 1.
@@ -94,6 +96,39 @@ int main() {
     //         std::cout << "Name: " << p.name << std::endl;
     // }
     // std::cout << std::endl;
+
+    // Part 5: Comparing permutation format:
+    // Sparse Matrix format and vector format.
+    // Permutation perm_vect1(4, g);
+    // Permutation perm_vect2(4, g);
+    Permutation perm_vect1(1000000, g);
+    Permutation perm_vect2(1000000, g);
+    auto t1 = std::chrono::system_clock::now();
+    Permutation res_vect1 = perm_vect1 * perm_vect2;
+    auto t2 = std::chrono::system_clock::now();
+    std::chrono::duration<double> diff = t2-t1;
+
+    PermutationMatrix res_mat1(res_vect1);
+
+    // Create sparse permmutation.
+    PermutationMatrix perm_mat1(perm_vect1);
+    PermutationMatrix perm_mat2(perm_vect2);
+
+    auto t3 = std::chrono::system_clock::now();
+    PermutationMatrix res_mat2 = perm_mat1 * perm_mat2;
+    auto t4 = std::chrono::system_clock::now();
+    std::chrono::duration<double> diff2 = t4-t3;
+    std::cout << "Benchmarking both permutation formats." << std::endl;
+    std::cout << "Vector format: " << diff.count() << "s." << std::endl;
+    std::cout << "Matrix format: " << diff2.count() << "s." << std::endl;
+    // Vector format is so much faster.
+
+    // std::cout << "P1: \n" << perm_vect1 << std::endl;
+    // std::cout << "P2: \n" << perm_vect2 << std::endl;
+    // std::cout << "Res 1: \n" << res_mat1 << std::endl;
+    // std::cout << "Res 2: \n" << res_mat2 << std::endl;
+    // std::cout << PermutationMatrix(res_vect1.inverse()) << std::endl;
+    // std::cout << res_mat1.inverse() << std::endl;
 
     return 0;
 }
