@@ -1,9 +1,10 @@
-#include "permutation.hpp"
-#include "cycle.hpp"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
 #include <ctime>
+#include "permutation.hpp"
+#include "cycle.hpp"
+#include "../TP1/Ex3.cpp"
 
 int main() {
     // Part 1.
@@ -48,6 +49,51 @@ int main() {
     }
     std::cout << "The ratio of derangements is approximately: "
         << nb_derang/double(nb_echant) << std::endl;
+
+    // Part 4: Custom.
+    std::vector<double> V = {10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0};
+    a.permute(V);
+    std::cout << "The vector V permuted by a gives: \n";
+    for (size_t i = 0; i < V.size(); i++) {
+        std::cout << V[i] << "\t";
+    }
+    std::cout << std::endl;
+
+    std::vector<PersonInfo> personsInfo;
+    std::ifstream file("../TP1/smalldata.txt");
+
+    std::string name;
+    std::string city;
+    int age;
+    double time;
+        while (file >> name >> city >> age >> time) {
+        PersonInfo p = {name, city, age, time};
+        personsInfo.push_back(p);
+    }
+    file.close();
+
+    // Initial statistics.
+    Answers A1 = analysis(personsInfo);
+    writeAnswers(A1, "Analysis.txt");
+
+    // for (const PersonInfo p: personsInfo) {
+    //     if (p.name[0] == 'P' && p.name[1] == 'a')
+    //         std::cout << "Name: " << p.name << std::endl;
+    // }
+    // std::cout << std::endl;
+    
+    // Permuted statistics, should not modify the analysis.
+    Permutation random_permutation(personsInfo.size(), g);
+    random_permutation.permute(personsInfo);
+
+    Answers A2 = analysis(personsInfo);
+    writeAnswers(A2, "Analysis2.txt");
+
+    // for (const PersonInfo p: personsInfo) {
+    //     if (p.name[0] == 'P' && p.name[1] == 'a')
+    //         std::cout << "Name: " << p.name << std::endl;
+    // }
+    // std::cout << std::endl;
 
     return 0;
 }

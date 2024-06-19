@@ -142,22 +142,22 @@ void writeAnswers(Answers A, const std::string filename) {
     return ;
 }
 
-int main() {
-    std::vector<PersonInfo> personsInfo;
-    std::ifstream file("smalldata.txt");
+// int main() {
+//     std::vector<PersonInfo> personsInfo;
+//     std::ifstream file("smalldata.txt");
 
-    std::string name;
-    std::string city;
-    int age;
-    double time;
-    while (file >> name >> city >> age >> time) {
-        PersonInfo p = {name, city, age, time};
-        personsInfo.push_back(p);
-    }
-    file.close();
+//     std::string name;
+//     std::string city;
+//     int age;
+//     double time;
+//     while (file >> name >> city >> age >> time) {
+//         PersonInfo p = {name, city, age, time};
+//         personsInfo.push_back(p);
+//     }
+//     file.close();
 
-    Answers A = analysis(personsInfo);
-    writeAnswers(A, "Analysis.txt");
+//     Answers A = analysis(personsInfo);
+//     writeAnswers(A, "Analysis.txt");
 
-    return 0;
-}
+//     return 0;
+// }

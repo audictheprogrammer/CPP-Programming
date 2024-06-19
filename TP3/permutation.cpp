@@ -1,6 +1,4 @@
 #include "permutation.hpp"
-#include <assert.h>
-
 
 /* Constructors. */
 Permutation::Permutation(const std::vector<int>& u): val(u), n(u.size()) {}

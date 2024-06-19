@@ -15,6 +15,7 @@ private:
 public:
     Cycle(const std::list<int>& L);
     int order() const;
+    std::list<int> getElem() const {return elem;};
     friend bool operator <(const Cycle& a, const Cycle& b);
     friend std::ostream& operator <<(std::ostream& o, const Cycle& c);
 };
