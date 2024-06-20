@@ -1,6 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <algorithm>
 #include <ctime>
 #include <chrono>
 #include "permutation.hpp"
@@ -8,8 +5,11 @@
 #include "../TP1/Ex3.cpp"
 #include "perm_matrix.hpp"
 
-int main() {
-    // Part 1.
+void test1() {
+    /* Test 1.
+    - Constructors: using a vector, a size.
+    - Method: fixedPoints().
+    */
     std::vector<int> v = {2, 4, 5, 3, 1, 0};
     Permutation a(v); 
     Permutation b(6); // identity
@@ -22,8 +22,15 @@ int main() {
     auto affiche = [](int x) {std::cout << x << " ";};
     std::for_each(fp.begin(), fp.end(), affiche);
     std::cout << std::endl << std::endl;
+}
 
-    // Part 2.
+void test2() {
+    /* Test 2.
+    - Constructor: using a file.
+    - Methods: inverse(), order(), cycles(), printCycles().
+    */
+    std::vector<int> v = {2, 4, 5, 3, 1, 0};
+    Permutation a(v); 
     // std::ifstream fichier_s("./file_s.dat");
     // std::ifstream fichier_t("./file_t.dat");
     // Permutation s(fichier_s);
@@ -41,7 +48,10 @@ int main() {
     " cycles, with the longest being of size: " <<
     (*std::max_element(L.begin(), L.end())).order() << std::endl;
     // Here it's using the '<' operator.
-    // Part 3.
+}
+
+void test3() {
+    /* Part 3: Generating random examples. */
     std::mt19937 g(time(nullptr));
     unsigned n = 100;
     unsigned nb_echant = 10000;
@@ -50,10 +60,16 @@ int main() {
         nb_derang += Permutation(n, g).is_derangement();
     }
     std::cout << "The ratio of derangements is approximately: "
-        << nb_derang/double(nb_echant) << std::endl;
+              << nb_derang/double(nb_echant) << std::endl;
+}
 
-    // Part 4: Custom.
+
+void test4() {
+    /* Test 4: Applying permutation on some statistics (using TP1). */
+    std::mt19937 g(time(nullptr));
     std::vector<double> V = {10.0, 20.0, 30.0, 40.0, 50.0, 60.0, 70.0};
+    std::vector<int> p = {2, 4, 5, 3, 1, 0};
+    Permutation a(p);
     a.permute(V);
     std::cout << "The vector V permuted by a gives: \n";
     for (size_t i = 0; i < V.size(); i++) {
@@ -78,12 +94,6 @@ int main() {
     Answers A1 = analysis(personsInfo);
     writeAnswers(A1, "Analysis.txt");
 
-    // for (const PersonInfo p: personsInfo) {
-    //     if (p.name[0] == 'P' && p.name[1] == 'a')
-    //         std::cout << "Name: " << p.name << std::endl;
-    // }
-    // std::cout << std::endl;
-    
     // Permuted statistics, should not modify the analysis.
     Permutation random_permutation(personsInfo.size(), g);
     random_permutation.permute(personsInfo);
@@ -97,10 +107,13 @@ int main() {
     // }
     // std::cout << std::endl;
 
-    // Part 5: Comparing permutation format:
-    // Sparse Matrix format and vector format.
-    // Permutation perm_vect1(4, g);
-    // Permutation perm_vect2(4, g);
+}
+
+void test5() {
+    /* Test 5: Benchmarking multiplication operator between
+    two permutation format: Sparse Matrix and Vector.
+    */
+    std::mt19937 g(time(nullptr));
     Permutation perm_vect1(1000000, g);
     Permutation perm_vect2(1000000, g);
     auto t1 = std::chrono::system_clock::now();
@@ -129,6 +142,23 @@ int main() {
     // std::cout << "Res 2: \n" << res_mat2 << std::endl;
     // std::cout << PermutationMatrix(res_vect1.inverse()) << std::endl;
     // std::cout << res_mat1.inverse() << std::endl;
+}
+
+int main() {
+    // Test 1: Testing basic functions.
+    test1();
+
+    // Test 2: Testing basic functions.
+    test2();
+
+    // Test 3: Generating random examples.
+    test3();
+
+    // Test 4: Applying permutation on some statistics (using TP1).
+    test4();
+
+    // Test 5: Benchmarking multiplication operator.
+    test5();
 
     return 0;
 }
