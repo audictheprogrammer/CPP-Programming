@@ -30,12 +30,12 @@ int main() {
 
     // Part 2.
     // Sum, difference, product
-    // Polynomial<int> sum = p1 + p2;
-    // Polynomial<int> diff = p1 - p2;
-    // Polynomial<int> prod = p1 * p2;
-    // std::cout << "Sum: " << sum << std::endl;
-    // std::cout << "Difference: " << diff << std::endl;
-    // std::cout << "Product: " << prod << std::endl;
+    Polynomial<int> sum = p1 + p2;
+    Polynomial<int> diff = p1 - p2;
+    Polynomial<int> prod = p1 * p2;
+    std::cout << "Sum: " << sum << std::endl;
+    std::cout << "Difference: " << diff << std::endl;
+    std::cout << "Product: " << prod << std::endl;
 
     // // Division and remainder
     // Polynomial<int> div = p1 / p2;
