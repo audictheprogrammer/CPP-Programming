@@ -5,6 +5,11 @@
 
 int main() {
     // Part 1.
+    std::cout << "\n";
+    std::cout << "#############################################" << std::endl;
+    std::cout << "########## Testing Basic features ###########" << std::endl;
+    std::cout << "#############################################" << std::endl;
+    std::cout << "\n";
     Polynomial<double> q;
     std::cout << "Degree of q: " << q.degree() << std::endl;
 
@@ -30,6 +35,11 @@ int main() {
 
     // Part 2.
     // Sum, difference, product
+    std::cout << "\n";
+    std::cout << "#############################################" << std::endl;
+    std::cout << "########### Testing Sum Diff Prod ###########" << std::endl;
+    std::cout << "#############################################" << std::endl;
+    std::cout << "\n";
     Polynomial<int> sum = p1 + p2;
     Polynomial<int> diff = p1 - p2;
     Polynomial<int> prod = p1 * p2;
@@ -37,11 +47,20 @@ int main() {
     std::cout << "Difference: " << diff << std::endl;
     std::cout << "Product: " << prod << std::endl;
 
-    // // Division and remainder
-    // Polynomial<int> div = p1 / p2;
-    // Polynomial<int> remainder = p1 % p2;
-    // std::cout << "Quotient: " << div << std::endl;
-    // std::cout << "Remainder: " << remainder << std::endl;
+    // Division and remainder
+    std::cout << "\n";
+    std::cout << "#############################################" << std::endl;
+    std::cout << "####### Testing Division and remainder ######" << std::endl;
+    std::cout << "#############################################" << std::endl;
+    std::cout << "\n";
+    std::vector<int> V1 = {-4, 0, -2, 1};
+    std::vector<int> V2 = {-3, 1};
+    Polynomial<int> P1(V1);
+    Polynomial<int> P2(V2);
+    Polynomial<int> div = P1 / P2;
+    Polynomial<int> remainder = P1 % P2;
+    std::cout << "Quotient: " << div << std::endl;
+    std::cout << "Remainder: " << remainder << std::endl;
 
     // // Evaluation at a point
     // std::cout << "p1(2): " << p1(2) << std::endl;
