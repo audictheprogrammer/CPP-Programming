@@ -4,7 +4,10 @@
 #include <algorithm>
 #include <vector>
 #include <type_traits>
+#include <numeric>
 
+
+// Forward declarations
 template<typename T>
 class Polynomial;
 
@@ -27,7 +30,7 @@ template <typename T>
 Polynomial<T> operator %(const Polynomial<T>& P, const Polynomial<T>& Q);
 
 template <typename T>
-void adjust(Polynomial<T>& P); // Adjust Polynomial size.
+void adjust(Polynomial<T>& P);
 
 // External functions.
 template <typename T>
@@ -118,6 +121,26 @@ public:
         return values[i];
     }
 
+    T operator ()(const T x) const {
+        /* Evalutation at a point operator.
+        Time Complexity: O(n). */
+        // Method 1: Linear complexity.
+        // T sum = T();
+        // T pow = 1;
+        // for (int i = 0; i <= n; i++) {
+        //     sum += pow * values[i];
+        //     pow *= x; 
+        // }
+
+        // return sum;
+
+        // Method 2 (Horner): Linear complexity.
+        return std::accumulate(values.rbegin(), values.rend(), T{}, [x](T acc, T a) {
+            return acc*x + a;
+        });
+
+    }
+
     friend Polynomial<T> operator +<>(const Polynomial<T>& P, const Polynomial<T>& Q);
     friend Polynomial<T> operator -<>(const Polynomial<T>& P, const Polynomial<T>& Q);
     friend Polynomial<T> operator *<>(const Polynomial<T>& P, const Polynomial<T>& Q);
@@ -198,7 +221,6 @@ template <typename T>
 Polynomial<T> operator *(const Polynomial<T>& P, const Polynomial<T>& Q){
     /* Product of two polynomials. */
     std::vector<T> r_values(P.n + Q.n + 1, T(0));
-
     for (int i = 0; i <= P.n; i++) {
         for (int j = 0; j <= Q.n; j++) {
             r_values[i+j] += P[i]*Q[j];
