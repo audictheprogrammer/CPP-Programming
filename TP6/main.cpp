@@ -68,10 +68,25 @@ int main() {
     std::cout << "####### Testing Evaluation at a point #######" << std::endl;
     std::cout << "#############################################" << std::endl;
     std::cout << "\n";
-    std::cout << "p1(2): " << P1(7.) << std::endl;
-    std::cout << "p1(2): " << P2(7.) << std::endl;
-    std::cout << "p1(2): " << p1(7.) << std::endl;
-    std::cout << "p1(2): " << p2(7.) << std::endl;
+    std::cout << "P1(7.): " << P1(7.) << std::endl;
+    std::cout << "P2(7.): " << P2(7.) << std::endl;
+    std::cout << "p1(7.): " << p1(7.) << std::endl;
+    std::cout << "p2(7.): " << p2(7.) << std::endl;
 
+    // Evaluation using monomials
+    std::cout << "\n";
+    std::cout << "#############################################" << std::endl;
+    std::cout << "##### Testing Evaluation using monomials ####" << std::endl;
+    std::cout << "#############################################" << std::endl;
+    std::cout << "\n";
+    P1.computeMonomials();
+    P2.computeMonomials();
+    p1.computeMonomials();
+    p2.computeMonomials();
+    std::cout << "P1(7.): " << P1(7.) << std::endl;
+    std::cout << "P2(7.): " << P2(7.) << std::endl;
+    std::cout << "p1(7.): " << p1(7.) << std::endl;
+    std::cout << "p2(7.): " << p2(7.) << std::endl;
+    
     return 0;
 }

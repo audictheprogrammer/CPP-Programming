@@ -5,7 +5,8 @@
 #include <vector>
 #include <type_traits>
 #include <numeric>
-
+#include <list>
+#include "monomial.hpp"
 
 // Forward declarations
 template<typename T>
@@ -101,6 +102,8 @@ class Polynomial {
 private:
     std::vector<T> values;
     int n;
+    std::list<Monomial<T>> monomials;
+    bool is_updated = false;
     friend void adjust<>(Polynomial<T>& P); // Adjust Polynomial size.
 
 public:
@@ -124,21 +127,29 @@ public:
     T operator ()(const T x) const {
         /* Evalutation at a point operator.
         Time Complexity: O(n). */
-        // Method 1: Linear complexity.
-        // T sum = T();
-        // T pow = 1;
-        // for (int i = 0; i <= n; i++) {
-        //     sum += pow * values[i];
-        //     pow *= x; 
-        // }
 
-        // return sum;
+        // Using monomials to evaluate.
+        if (is_updated) return std::accumulate(monomials.rbegin(), monomials.rend(), T{}, [x](T acc, Monomial<T> M) {
+            return acc + M(x);
+        });
 
-        // Method 2 (Horner): Linear complexity.
+        // Using Horner's method to evaluate.
         return std::accumulate(values.rbegin(), values.rend(), T{}, [x](T acc, T a) {
             return acc*x + a;
         });
 
+    }
+
+    void computeMonomials() {
+        std::list<Monomial<T>> L {};
+        for (int i = 0; i <= n; i++) {
+            if (!is_zero(values[i])) {
+                Monomial<T> M(values[i], i);
+                L.push_back(M);
+            }
+        }
+        this->is_updated = true;
+        this->monomials = L;
     }
 
     friend Polynomial<T> operator +<>(const Polynomial<T>& P, const Polynomial<T>& Q);
